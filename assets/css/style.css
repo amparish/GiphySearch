@@ -1,0 +1,16 @@
+body {
+	background-image: url("../images/swirl_pattern.png");
+}
+
+.panel {
+	background-color: white;
+	border: 2px solid black;
+}
+
+.panel-body {
+	text-align: center;
+}
+
+.page-header {
+	text-align: center;
+}
