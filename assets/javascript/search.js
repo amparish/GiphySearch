@@ -1,9 +1,36 @@
-var topics = ["chris gethard", "mst3k", "richard ayoade", "karl pilkington", "big fat quiz", "comedy bang bang"];
+var topics = ["mst3k", "chris gethard", "richard ayoade", "karl pilkington", "big fat quiz", "comedy bang bang"];
 
-// button click function
-$("button").on("click", function(){
+// creates buttons from existing items in topics array
+function createButtons(){
+  $("#buttons").empty();
 
-  var searchItem = $(this).attr("");
+  for (var i = 0; i < topics.length; i++){
+    var btn = $("<button>");
+    btn.addClass("btn btn-danger");
+    btn.attr("id", "image-button");
+    btn.attr("data-name", topics[i]);
+    //btn.attr("style", "margin: 5px")
+    btn.text(topics[i]);
+    $("#buttons").append(btn);
+  }
+}
+
+createButtons();
+
+// search button click function
+$("#search-button").on("click", function(event){
+  
+  event.preventDefault();
+  var searchTerm = $("#search-input").val().trim();
+  topics.push(searchTerm);
+  createButtons();
+
+});
+
+// image button click function
+$("#image-button").on("click", function(){
+
+  var searchItem = $(this).attr("data-name");
 
   var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchItem + "&api_key=dc6zaTOxFJmzC&limit=10";
 
@@ -21,10 +48,28 @@ $("button").on("click", function(){
       var searchDiv = $("<div>");
       var rating = $("<p>").text("Rating: " + results[i].rating);
       var searchImage = $("<img>");
-      image.attr("src", results[i].images.fixed_height_still.url);
-      searchDiv.append(rating);
+      searchImage.attr("src", results[i].images.fixed_height_still.url);
+      searchImage.attr("data-state", "still");
+      searchImage.attr("data-still", results[i].images.fixed_height_still.url);
+      searchImage.attr("data-animate", results[i].images.fixed_height.url);
+      searchImage.addClass("gif");
       searchDiv.append(searchImage);
+      searchDiv.append(rating);
       $("#gifs").prepend(searchDiv);
     }
   });
+});
+
+// GIF pause/unpause function
+$(".gif").on("click", function() {
+     
+  var state = $(this).attr("data-state");
+
+  if (state === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+  } else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
 });
