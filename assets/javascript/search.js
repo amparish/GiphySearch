@@ -21,9 +21,10 @@ createButtons();
 $("#search-button").on("click", function(event){
   
   event.preventDefault();
-  var searchTerm = $("#search-input").val().trim();
+  var searchTerm = $("#search-input").val();
   topics.push(searchTerm);
   createButtons();
+  $("#search-input").val('');
 
 });
 
