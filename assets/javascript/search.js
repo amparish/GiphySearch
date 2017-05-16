@@ -1,4 +1,4 @@
-var topics = ["mst3k", "chris gethard", "richard ayoade", "karl pilkington", "big fat quiz", "comedy bang bang"];
+var topics = ["mst3k", "comedy bang bang", "chris gethard", "richard ayoade", "karl pilkington", "big fat quiz"];
 
 // creates buttons from existing items in topics array
 function createButtons(){
@@ -7,9 +7,8 @@ function createButtons(){
   for (var i = 0; i < topics.length; i++){
     var btn = $("<button>");
     btn.addClass("btn btn-danger");
-    btn.attr("id", "image-button");
+    btn.addClass("image-button");
     btn.attr("data-name", topics[i]);
-    //btn.attr("style", "margin: 5px")
     btn.text(topics[i]);
     $("#buttons").append(btn);
   }
@@ -17,29 +16,25 @@ function createButtons(){
 
 createButtons();
 
-// search button click function
+// search button click function, adds to array
 $("#search-button").on("click", function(event){
-  
   event.preventDefault();
   var searchTerm = $("#search-input").val();
   topics.push(searchTerm);
   createButtons();
   $("#search-input").val('');
-
 });
 
-// image button click function
-$("#image-button").on("click", function(){
+// image button click function, ajax request
+$(document).on("click",".image-button", function(){
 
   var searchItem = $(this).attr("data-name");
-
   var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchItem + "&api_key=dc6zaTOxFJmzC&limit=10";
 
   $.ajax({
     url: queryURL,
     method: "GET"
-  })
-  .done(function(response){
+  }).done(function(response){
     console.log(queryURL);
     console.log(response);
 
@@ -62,7 +57,7 @@ $("#image-button").on("click", function(){
 });
 
 // GIF pause/unpause function
-$(".gif").on("click", function() {
+$(document).on("click", ".gif", function() {
      
   var state = $(this).attr("data-state");
 
