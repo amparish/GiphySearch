@@ -1,4 +1,4 @@
-var topics = ["mst3k", "comedy bang bang", "chris gethard show", "richard ayoade", "karl pilkington", "big fat quiz"];
+var topics = ["mst3k", "comedy bang bang", "chris gethard show", "scott pilgrim", "hot fuzz", "shaun of the dead", "richard ayoade", "karl pilkington", "big fat quiz"];
 
 // creates buttons from existing items in topics array
 function createButtons(){
